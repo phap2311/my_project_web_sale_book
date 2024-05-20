@@ -16,6 +16,7 @@ public class Books {
     private String image;
     private String author;
     private String description;
+    private int quantity;
     private double price;
     @ManyToOne
     @JoinColumn(name = "category_id")

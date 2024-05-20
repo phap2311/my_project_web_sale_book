@@ -9,7 +9,7 @@ import java.util.List;
 import java.util.Optional;
 
 @Service
-public class BookService implements IBookService{
+public class BookService implements IBookService {
     @Autowired
     private IBookRepository iBookRepository;
 
@@ -22,5 +22,16 @@ public class BookService implements IBookService{
     public Optional<Books> findById(Long id) {
         return iBookRepository.findById(id);
     }
+
+    @Override
+    public Books save(Books books) {
+        return iBookRepository.save(books);
+    }
+
+    @Override
+    public void delete(Long id) {
+        iBookRepository.deleteById(id);
+    }
+
 
 }
