@@ -16,7 +16,7 @@ public class Cart {
     private Long id;
     private int quantity;
     private LocalDate date_purchase;
-    private double price;
+    private double total_price;
     private String status;
     @ManyToOne
     @JoinColumn(name = "account_id")

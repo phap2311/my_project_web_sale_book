@@ -1,5 +1,6 @@
 package com.example.book_storemanagement.service.cart;
 
+import com.example.book_storemanagement.model.dto.CartDTO;
 import com.example.book_storemanagement.model.entity.Account;
 import com.example.book_storemanagement.model.entity.Books;
 import com.example.book_storemanagement.model.entity.Cart;
@@ -10,6 +11,7 @@ import org.springframework.stereotype.Service;
 
 import java.time.LocalDate;
 import java.util.HashSet;
+import java.util.List;
 
 @Service
 public class CartService implements ICartService {
@@ -22,9 +24,10 @@ public class CartService implements ICartService {
         iCartRepository.createCart(accountId,quantity);
         Long cartId = iCartRepository.getLastInsertedCartId();
         iCartRepository.addBookToCart(bookId, cartId);
-
-
     }
 
-
+    @Override
+    public List<CartDTO> findAllCart(Long accountId) {
+        return iCartRepository.findAllCart(accountId);
+    }
 }
