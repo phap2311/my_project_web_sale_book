@@ -4,6 +4,8 @@ import jakarta.persistence.*;
 import lombok.Data;
 import lombok.NoArgsConstructor;
 
+import java.util.Set;
+
 @Entity
 @Data
 @Table(name = "books")
@@ -24,5 +26,7 @@ public class Books {
     @ManyToOne
     @JoinColumn(name = "account_id")
     private Account account;
+    @ManyToMany(fetch = FetchType.EAGER)
+    private Set<Cart> carts;
 
 }
