@@ -4,6 +4,8 @@ import java.time.LocalDate;
 
 public interface CartDTO {
     Long getId();
+    String getImage();
+    String getAuthor();
 
     String getName();
 

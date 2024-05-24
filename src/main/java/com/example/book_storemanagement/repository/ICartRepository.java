@@ -23,10 +23,11 @@ public interface ICartRepository extends JpaRepository<Cart, Long> {
 
     @Query(nativeQuery = true, value = "SELECT LAST_INSERT_ID()")
     Long getLastInsertedCartId();
-@Query(nativeQuery = true, value = "select b.name, c.quantity, c.date_purchase, c.total_price \n" +
-        " from cart c join books_carts bc on bc.carts_id = c.id\n" +
-        " join books b on bc.books_id = b.id\n" +
-        " where c.account_id = :accountId")
-    List<CartDTO> findAllCart(@Param("accountId") Long accountId );
+
+    @Query(nativeQuery = true, value = "select b.name,b.image, b.author, c.quantity, c.date_purchase, c.total_price \n" +
+            " from cart c join books_carts bc on bc.carts_id = c.id\n" +
+            " join books b on bc.books_id = b.id\n" +
+            " where c.account_id = :accountId")
+    List<CartDTO> findAllCart(@Param("accountId") Long accountId);
 }
 
