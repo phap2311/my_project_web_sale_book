@@ -4,7 +4,9 @@ import java.time.LocalDate;
 
 public interface CartDTO {
     Long getId();
+
     String getImage();
+
     String getAuthor();
 
     String getName();
@@ -14,4 +16,6 @@ public interface CartDTO {
     LocalDate getDate_purchase();
 
     double getTotal_price();
+    Long getCartId();
+    Long getBookId();
 }

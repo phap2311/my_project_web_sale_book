@@ -2,12 +2,15 @@ package com.example.book_storemanagement.service.cart;
 
 import com.example.book_storemanagement.model.dto.CartDTO;
 
+import com.example.book_storemanagement.model.dto.TotalPriceDTO;
 import com.example.book_storemanagement.model.entity.Cart;
 import com.example.book_storemanagement.repository.ICartRepository;
+import jakarta.transaction.Transactional;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 
 import java.util.List;
+import java.util.Optional;
 
 @Service
 public class CartService implements ICartService {
@@ -17,7 +20,7 @@ public class CartService implements ICartService {
 
     @Override
     public void addBookToCart(Long accountId, Long bookId, int quantity) {
-        iCartRepository.createCart(accountId,quantity);
+        iCartRepository.createCart(accountId, quantity);
         Long cartId = iCartRepository.getLastInsertedCartId();
         iCartRepository.addBookToCart(bookId, cartId);
     }
@@ -25,5 +28,17 @@ public class CartService implements ICartService {
     @Override
     public List<CartDTO> findAllCart(Long accountId) {
         return iCartRepository.findAllCart(accountId);
+    }
+
+    @Override
+    public Optional<TotalPriceDTO> getTotal(Long accountId) {
+        return iCartRepository.getTotal(accountId);
+    }
+
+    @Transactional
+    @Override
+    public void removeBookToCart(Long bookId, Long cartId) {
+        iCartRepository.removeBookToCart(bookId, cartId);
+       iCartRepository.deleteCartIfEmpty(cartId);
     }
 }
