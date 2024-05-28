@@ -16,6 +16,6 @@ public interface CartDTO {
     LocalDate getDate_purchase();
 
     double getTotal_price();
-    Long getCartId();
+    Long getBillId();
     Long getBookId();
 }

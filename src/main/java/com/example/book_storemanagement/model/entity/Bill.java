@@ -1,23 +1,23 @@
 package com.example.book_storemanagement.model.entity;
+
 import jakarta.persistence.*;
 import lombok.Data;
 import lombok.NoArgsConstructor;
 
 import java.time.LocalDate;
 
-
 @Entity
 @Data
-@Table(name = "orders")
+@Table(name = "bill")
 @NoArgsConstructor
-public class Orders {
+public class Bill {
     @Id
     @GeneratedValue(strategy = GenerationType.IDENTITY)
     private Long id;
-    private LocalDate order_date;
-    private String status;
-    private double total_amount;
-    @ManyToOne
-    @JoinColumn(name = "account_id")
-    private Account account;
+    LocalDate date_bill;
+    String  payment;
+    String  content;
+    private String address;
+
+
 }

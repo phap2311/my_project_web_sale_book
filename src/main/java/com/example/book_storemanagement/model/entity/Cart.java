@@ -4,7 +4,6 @@ import jakarta.persistence.*;
 import lombok.Data;
 import lombok.NoArgsConstructor;
 import java.time.LocalDate;
-import java.util.Set;
 
 @Entity
 @Data
@@ -21,6 +20,10 @@ public class Cart {
     @ManyToOne
     @JoinColumn(name = "account_id")
     private Account account;
-    @ManyToMany(mappedBy = "carts")
-    private Set<Books> books;
+    @ManyToOne
+    @JoinColumn(name = "books_id")
+    private Books books;
+    @OneToOne
+    @JoinColumn(name = "bill_id")
+    private Bill bill;
 }

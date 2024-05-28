@@ -3,7 +3,6 @@ package com.example.book_storemanagement.service.cart;
 import com.example.book_storemanagement.model.dto.CartDTO;
 
 import com.example.book_storemanagement.model.dto.TotalPriceDTO;
-import com.example.book_storemanagement.model.entity.Cart;
 import com.example.book_storemanagement.repository.ICartRepository;
 import jakarta.transaction.Transactional;
 import org.springframework.beans.factory.annotation.Autowired;
@@ -17,12 +16,9 @@ public class CartService implements ICartService {
     @Autowired
     private ICartRepository iCartRepository;
 
-
     @Override
-    public void addBookToCart(Long accountId, Long bookId, int quantity) {
-        iCartRepository.createCart(accountId, quantity);
-        Long cartId = iCartRepository.getLastInsertedCartId();
-        iCartRepository.addBookToCart(bookId, cartId);
+    public void createCart(Long accountId, Long bookId, int quantity) {
+        iCartRepository.createCart(accountId, bookId, quantity);
     }
 
     @Override
@@ -35,10 +31,10 @@ public class CartService implements ICartService {
         return iCartRepository.getTotal(accountId);
     }
 
-    @Transactional
     @Override
-    public void removeBookToCart(Long bookId, Long cartId) {
-        iCartRepository.removeBookToCart(bookId, cartId);
-       iCartRepository.deleteCartIfEmpty(cartId);
+    public void removeBookToCart(Long id) {
+        iCartRepository.deleteById(id);
     }
+
+
 }

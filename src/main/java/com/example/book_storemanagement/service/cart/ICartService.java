@@ -9,11 +9,11 @@ import java.util.List;
 import java.util.Optional;
 
 public interface ICartService {
-    void addBookToCart(Long bookId, Long accountId,int quantity);
+    void createCart( Long accountId, Long bookId,  int quantity);
 
     List<CartDTO> findAllCart(Long accountId );
     Optional<TotalPriceDTO>getTotal(Long accountId);
-    void removeBookToCart(Long bookId,Long cartId);
+    void removeBookToCart(Long id);
 
 
 }

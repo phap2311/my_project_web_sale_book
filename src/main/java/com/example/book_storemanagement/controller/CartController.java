@@ -21,7 +21,7 @@ public class CartController {
 
     @PostMapping("create")
     public ResponseEntity<Void> createCart(@RequestParam Long accountId, @RequestParam Long bookId, @RequestParam int quantity) {
-        iCartService.addBookToCart(accountId, bookId, quantity);
+        iCartService.createCart(accountId, bookId, quantity);
         return new ResponseEntity<>(HttpStatus.CREATED);
     }
 
@@ -40,9 +40,9 @@ public class CartController {
         return new ResponseEntity<>(totalPriceDTO.get(), HttpStatus.OK);
     }
 
-    @DeleteMapping("{cartId}/books/{bookId}")
-    public ResponseEntity<Void> removeBooksToCart(@PathVariable Long bookId , @PathVariable Long cartId) {
-        iCartService.removeBookToCart(bookId,cartId);
+    @DeleteMapping("{id}")
+    public ResponseEntity<Void> removeBooksToCart(@PathVariable Long id ) {
+        iCartService.removeBookToCart(id);
         return new ResponseEntity<>(HttpStatus.ACCEPTED);
     }
 
