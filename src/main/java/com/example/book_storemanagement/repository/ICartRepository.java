@@ -22,9 +22,7 @@ public interface ICartRepository extends JpaRepository<Cart, Long> {
             "WHERE b.id = :bookId  ")
     void createCart(@Param("accountId") Long accountId, @Param("bookId")Long bookId, @Param("quantity") int quantity);
 
-
-
-    @Query(nativeQuery = true, value = "select b.name,b.image, b.author, c.quantity, c.date_purchase, c.total_price, c.books_id as bookId, c.bill_id as billId, c.account_id as accountId \n" +
+    @Query(nativeQuery = true, value = "select b.name,b.image, b.author,c.id, c.quantity, c.date_purchase, c.total_price, c.books_id as bookId, c.bill_id as billId, c.account_id as accountId \n" +
             " from cart c join books b on c.books_id = b.id\n" +
             " where c.account_id = :accountId")
     List<CartDTO> findAllCart(@Param("accountId") Long accountId);
