@@ -20,5 +20,5 @@ public class Account {
     private String email;
     private String avatar;
     @ManyToMany(fetch = FetchType.EAGER)
-    private Set<Role> roles;
+    private Set<Roles> roles;
 }

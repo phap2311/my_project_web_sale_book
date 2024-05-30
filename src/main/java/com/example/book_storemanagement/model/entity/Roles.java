@@ -8,7 +8,7 @@ import lombok.NoArgsConstructor;
 @Data
 @Table(name = "role")
 @NoArgsConstructor
-public class Role {
+public class Roles {
     @Id
     @GeneratedValue(strategy = GenerationType.IDENTITY)
     private Long id;
