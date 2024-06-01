@@ -24,6 +24,8 @@ public class Books {
     private Category category;
     private int quantity;
 
-
+    @ManyToOne
+    @JoinColumn(name = "account_id")
+    private Account account;
 
 }

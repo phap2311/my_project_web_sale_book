@@ -33,5 +33,8 @@ public class BookService implements IBookService {
         iBookRepository.deleteById(id);
     }
 
-
+    @Override
+    public List<Books> findAllBookByAccountId(Long accountId) {
+        return iBookRepository.findAllBookByAccountId(accountId);
+    }
 }

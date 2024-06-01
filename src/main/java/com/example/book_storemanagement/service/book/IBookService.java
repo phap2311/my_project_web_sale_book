@@ -10,4 +10,6 @@ public interface IBookService {
     Optional<Books>findById(Long id);
     Books save(Books books);
     void delete(Long id);
+    List<Books> findAllBookByAccountId(Long accountId);
+
 }
