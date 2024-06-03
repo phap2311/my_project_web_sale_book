@@ -12,6 +12,7 @@ import java.util.Optional;
 
 public interface ISellerRepository extends JpaRepository<Account, Long> {
     @Query(nativeQuery = true, value = "SELECT \n" +
+            "    a.id ,\n" +
             "    a.name ,\n" +
             "    a.phone,\n" +
             "    a.email,\n" +

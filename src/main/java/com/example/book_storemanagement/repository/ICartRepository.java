@@ -14,13 +14,23 @@ import java.util.Optional;
 
 public interface ICartRepository extends JpaRepository<Cart, Long> {
 
-    @Transactional
+//    @Transactional
+//    @Modifying
+//    @Query(nativeQuery = true, value = "INSERT INTO cart (account_id, quantity, date_purchase, total_price, status,bill_id,books_id) SELECT :accountId, :#{#c.quantity}, current_time(), b.price, 'pending',:#{#c.bill_id} , :bookId\n" +
+//            "FROM books b\n" +
+//            "JOIN cart c ON b.id = c.books_id \n" +
+//            "JOIN account acc ON acc.id = c.account_id \n" +
+//            "WHERE b.id = :bookId and acc.id = :accountId ")
+//    void createCart(@Param("accountId") Long accountId, @Param("bookId")Long bookId, @Param("quantity") int quantity, @Param("cart")Cart cart);
+
     @Modifying
-    @Query(nativeQuery = true, value = "INSERT INTO cart (account_id, quantity, date_purchase, total_price, status,bill_id,books_id) SELECT acc.id, :quantity, current_time(), b.price, 'pending', null, b.id\n" +
-            "FROM books b\n" +
-            "JOIN account acc ON acc.id = :accountId \n" +
-            "WHERE b.id = :bookId  ")
-    void createCart(@Param("accountId") Long accountId, @Param("bookId")Long bookId, @Param("quantity") int quantity);
+    @Transactional
+    @Query(nativeQuery = true, value = "INSERT INTO cart (account_id, quantity, date_purchase, total_price, status, bill_id, books_id) " +
+            "VALUES (:accountId, :#{#cart.quantity}, current_time(), " +
+            "(SELECT b.price FROM Books b WHERE b.id = :bookId), 'pending',null, :bookId)")
+    void createCart(@Param("accountId") Long accountId,
+                    @Param("bookId") Long bookId,
+                    @Param("cart") Cart cart);
 
     @Query(nativeQuery = true, value = "select b.name,b.image, b.author,c.id, c.quantity, c.date_purchase, c.total_price, c.books_id as bookId, c.bill_id as billId, c.account_id as accountId \n" +
             " from cart c join books b on c.books_id = b.id\n" +

@@ -1,8 +1,10 @@
 package com.example.book_storemanagement.controller;
 
+import com.example.book_storemanagement.config.service.JwtService;
 import com.example.book_storemanagement.model.dto.CartDTO;
 import com.example.book_storemanagement.model.dto.TotalPriceDTO;
 import com.example.book_storemanagement.model.entity.Cart;
+import com.example.book_storemanagement.repository.IAccountRepository;
 import com.example.book_storemanagement.service.cart.ICartService;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.http.HttpStatus;
@@ -19,9 +21,17 @@ public class CartController {
     @Autowired
     private ICartService iCartService;
 
+    @Autowired
+    private JwtService jwtService;
+    @Autowired
+    private IAccountRepository iAccountRepository;
+
     @PostMapping("create")
-    public ResponseEntity<Void> createCart(@RequestParam Long accountId, @RequestParam Long bookId, @RequestParam int quantity) {
-        iCartService.createCart(accountId, bookId, quantity);
+    public ResponseEntity<Cart> createCart(@RequestParam Long accountId, @RequestParam Long bookId,@RequestBody Cart cart,@RequestHeader("Authorization") String tokenHeader) {
+        String token = tokenHeader.substring(7);
+        String account = jwtService.getUsernameFromJwtToken(token);
+        cart.setAccount(iAccountRepository.findByUsername(account));
+        iCartService.createCart(accountId, bookId,cart);
         return new ResponseEntity<>(HttpStatus.CREATED);
     }
 

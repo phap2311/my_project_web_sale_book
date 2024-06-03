@@ -3,6 +3,7 @@ package com.example.book_storemanagement.service.cart;
 import com.example.book_storemanagement.model.dto.CartDTO;
 
 import com.example.book_storemanagement.model.dto.TotalPriceDTO;
+import com.example.book_storemanagement.model.entity.Cart;
 import com.example.book_storemanagement.repository.ICartRepository;
 import jakarta.transaction.Transactional;
 import org.springframework.beans.factory.annotation.Autowired;
@@ -17,8 +18,9 @@ public class CartService implements ICartService {
     private ICartRepository iCartRepository;
 
     @Override
-    public void createCart(Long accountId, Long bookId, int quantity) {
-        iCartRepository.createCart(accountId, bookId, quantity);
+    public void createCart(Long accountId, Long bookId, Cart cart) {
+        //iCartRepository.createCart(accountId, bookId, quantity,cart);
+        iCartRepository.createCart(accountId, bookId,cart);
     }
 
     @Override

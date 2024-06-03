@@ -9,7 +9,8 @@ import java.util.List;
 import java.util.Optional;
 
 public interface ICartService {
-    void createCart( Long accountId, Long bookId,  int quantity);
+   // void createCart( Long accountId, Long bookId,  int quantity, Cart cart);
+    void createCart( Long accountId, Long bookId, Cart cart);
 
     List<CartDTO> findAllCart(Long accountId );
     Optional<TotalPriceDTO>getTotal(Long accountId);

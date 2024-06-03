@@ -12,8 +12,10 @@ public interface SellerDetail {
     Integer getNumberOfBook();
 
     String getAvatar();
+    String getEmail();
 
     String getUsername();
+    String getAddress();
 
 
 
