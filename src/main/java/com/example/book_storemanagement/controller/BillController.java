@@ -1,6 +1,7 @@
 package com.example.book_storemanagement.controller;
 
 import com.example.book_storemanagement.model.entity.Bill;
+import com.example.book_storemanagement.model.entity.Cart;
 import com.example.book_storemanagement.service.bill.IBillService;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.http.HttpStatus;
@@ -19,6 +20,7 @@ public class BillController {
     @PostMapping("create/{accountId}")
     public ResponseEntity<Void> createBill(@RequestBody Bill bill, @PathVariable Long accountId) {
         iBillService.save(bill, accountId);
+
         return new ResponseEntity<>(HttpStatus.CREATED);
     }
 

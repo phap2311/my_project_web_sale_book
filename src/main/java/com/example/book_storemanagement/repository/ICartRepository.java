@@ -14,14 +14,6 @@ import java.util.Optional;
 
 public interface ICartRepository extends JpaRepository<Cart, Long> {
 
-//    @Transactional
-//    @Modifying
-//    @Query(nativeQuery = true, value = "INSERT INTO cart (account_id, quantity, date_purchase, total_price, status,bill_id,books_id) SELECT :accountId, :#{#c.quantity}, current_time(), b.price, 'pending',:#{#c.bill_id} , :bookId\n" +
-//            "FROM books b\n" +
-//            "JOIN cart c ON b.id = c.books_id \n" +
-//            "JOIN account acc ON acc.id = c.account_id \n" +
-//            "WHERE b.id = :bookId and acc.id = :accountId ")
-//    void createCart(@Param("accountId") Long accountId, @Param("bookId")Long bookId, @Param("quantity") int quantity, @Param("cart")Cart cart);
 
     @Modifying
     @Transactional
@@ -31,6 +23,11 @@ public interface ICartRepository extends JpaRepository<Cart, Long> {
     void createCart(@Param("accountId") Long accountId,
                     @Param("bookId") Long bookId,
                     @Param("cart") Cart cart);
+    @Query(nativeQuery = true,value = "select * from cart where account_id = :accountId")
+    List<Cart> findByAccountId(@Param("accountId") Long accountId);
+
+    @Query(nativeQuery = true, value = "select * from cart where account_id = :accountId and books_id = :bookId")
+    Cart findByAccountIdAndBookId(@Param("accountId") Long accountId, @Param("bookId") Long bookId);
 
     @Query(nativeQuery = true, value = "select b.name,b.image, b.author,c.id, c.quantity, c.date_purchase, c.total_price, c.books_id as bookId, c.bill_id as billId, c.account_id as accountId \n" +
             " from cart c join books b on c.books_id = b.id\n" +

@@ -7,4 +7,6 @@ import java.util.Optional;
 public interface IBillService {
     void save (Bill bill, Long accountId);
     Optional<Bill>findById(Long id);
+    Bill findByCodeBill(String code);
+
 }

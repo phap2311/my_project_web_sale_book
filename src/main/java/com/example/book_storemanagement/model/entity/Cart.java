@@ -23,7 +23,7 @@ public class Cart {
     @ManyToOne
     @JoinColumn(name = "books_id")
     private Books books;
-    @OneToOne
+    @ManyToOne
     @JoinColumn(name = "bill_id")
     private Bill bill;
 }

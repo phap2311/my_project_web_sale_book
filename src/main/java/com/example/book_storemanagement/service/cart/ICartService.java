@@ -12,9 +12,12 @@ public interface ICartService {
    // void createCart( Long accountId, Long bookId,  int quantity, Cart cart);
     void createCart( Long accountId, Long bookId, Cart cart);
 
+
+
     List<CartDTO> findAllCart(Long accountId );
     Optional<TotalPriceDTO>getTotal(Long accountId);
     void removeBookToCart(Long id);
 
 
+    void updateCartWithBill(Long accountId, String billCode);
 }

@@ -14,9 +14,11 @@ public class Bill {
     @Id
     @GeneratedValue(strategy = GenerationType.IDENTITY)
     private Long id;
+    private String code;
     private LocalDate date_bill;
     private String payment;
     private String content;
     private String address;
     private double money;
+
 }
