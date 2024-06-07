@@ -17,11 +17,11 @@ public class BillService implements IBillService {
 
     @Override
     public void save(Bill bill,Long accountId) {
-       // iBillRepository.saveBill(bill, accountId);
-       // String billCode = bill.getCode()    ;
+       /// iBillRepository.saveBill(bill, accountId);
+       /// String billCode = bill.getCode()    ;
         String billCode = generateFiveDigitInteger();
         bill.setCode(billCode);
-        //iBillRepository.save(bill);
+
         iBillRepository.saveBill(bill, accountId);
 
 
