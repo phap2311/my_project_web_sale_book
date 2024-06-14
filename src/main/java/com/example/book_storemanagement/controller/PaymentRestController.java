@@ -21,7 +21,7 @@ import java.text.SimpleDateFormat;
 import java.util.*;
 @RestController
 @CrossOrigin("*")
-@RequestMapping("auth")
+@RequestMapping("/auth")
 public class PaymentRestController {
     @Autowired
     private IAccountService iAccountService;
@@ -36,11 +36,11 @@ public class PaymentRestController {
         this.paymentInfoStorage = paymentInfoStorage;
     }
 
-    @PostMapping("/createPay")
+    @GetMapping("/createPay")
     private ResponseEntity<?> payment(@RequestParam(value = "price") Long price,
-                                      @RequestBody Bill bill,
+                                    // @RequestBody Bill bill,
                                       @RequestParam(value = "id") Long id) throws UnsupportedEncodingException {
-        paymentInfoStorage.setBill(bill);
+      // paymentInfoStorage.setBill(bill);
         long amount = price * 100;
         String orderType = "other";
         String bankCode = "NCB";
@@ -120,7 +120,7 @@ public class PaymentRestController {
         Optional<Account> account = this.iAccountService.findById(id);
         if (status.equals("00")) {
             System.out.println(account.get().getId() + " da thanh toan thanh cong");
-            this.iBillService.save(bill,id);
+            this.iBillService.update(bill,id);
             return new ResponseEntity<>("success",HttpStatus.OK);
         } else {
             System.out.println(account.get().getName() + " da huy thanh toan");

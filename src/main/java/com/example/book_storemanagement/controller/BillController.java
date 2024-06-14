@@ -18,10 +18,10 @@ public class BillController {
     private IBillService iBillService;
 
     @PostMapping("create/{accountId}")
-    public ResponseEntity<Void> createBill(@RequestBody Bill bill, @PathVariable Long accountId) {
+    public ResponseEntity<Long> createBill(@RequestBody Bill bill, @PathVariable Long accountId) {
         iBillService.save(bill, accountId);
-
-        return new ResponseEntity<>(HttpStatus.CREATED);
+        Long billId = iBillService.getLastInsertedId();
+        return new ResponseEntity<>(billId, HttpStatus.CREATED);
     }
 
     @GetMapping("{id}")

@@ -5,8 +5,10 @@ import com.example.book_storemanagement.model.entity.Bill;
 import java.util.Optional;
 
 public interface IBillService {
-    void save (Bill bill, Long accountId);
+    Bill save (Bill bill, Long accountId);
+    Long getLastInsertedId();
     Optional<Bill>findById(Long id);
     Bill findByCodeBill(String code);
 
+    void update(Bill bill, Long id);
 }

@@ -46,7 +46,8 @@ public class AuthenticationController {
         String jwt = jwtService.generateTokenLogin(authentication);
         UserDetails userDetails = (UserDetails) authentication.getPrincipal();
         Account currentAccount = usersService.findByUsername(account.getUsername());
-        return ResponseEntity.ok(new JwtResponse(currentAccount.getId(), jwt, userDetails.getUsername(), userDetails.getUsername(), userDetails.getAuthorities()));
+        String avatar = currentAccount.getAvatar();
+        return ResponseEntity.ok(new JwtResponse(currentAccount.getId(), jwt, userDetails.getUsername(), userDetails.getUsername(), userDetails.getAuthorities(),avatar));
     }
 
     @GetMapping()
@@ -77,5 +78,14 @@ public class AuthenticationController {
     public ResponseEntity<List<Account>> checkUserName(@RequestParam String username) {
         List<Account> list = iAccountService.checkUserName(username);
         return new ResponseEntity<>(list, HttpStatus.OK);
+    }
+
+    @GetMapping("/getInfo")
+    public ResponseEntity<?> getInfo(@RequestHeader("Authorization") String token) {
+        String newToken = token.substring(7);
+        String userName = jwtService.getUsernameFromJwtToken(newToken);
+        Account user = usersService.findByUsername(userName);
+        user.setPassword("");
+        return ResponseEntity.ok(user);
     }
 }

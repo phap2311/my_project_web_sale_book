@@ -3,6 +3,7 @@ package com.example.book_storemanagement.service.bill;
 import com.example.book_storemanagement.model.entity.Bill;
 import com.example.book_storemanagement.repository.IBillRepository;
 import com.example.book_storemanagement.service.cart.ICartService;
+import jakarta.transaction.Transactional;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 
@@ -16,16 +17,18 @@ public class BillService implements IBillService {
     private ICartService iCartService;
 
     @Override
-    public void save(Bill bill,Long accountId) {
+    public Bill save(Bill bill, Long accountId) {
        /// iBillRepository.saveBill(bill, accountId);
        /// String billCode = bill.getCode()    ;
         String billCode = generateFiveDigitInteger();
         bill.setCode(billCode);
-
         iBillRepository.saveBill(bill, accountId);
-
-
         iCartService.updateCartWithBill(accountId, billCode);
+        return bill;
+    }
+    @Override
+    public Long getLastInsertedId() {
+        return iBillRepository.getLastInsertedId();
     }
 
     public String generateFiveDigitInteger() {
@@ -41,6 +44,11 @@ public class BillService implements IBillService {
     @Override
     public Bill findByCodeBill(String code) {
         return iBillRepository.findByCode(code);
+    }
+
+    @Override
+    public void update(Bill bill, Long id) {
+        iBillRepository.updateBill(bill,id);
     }
 
 

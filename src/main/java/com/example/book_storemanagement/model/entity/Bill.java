@@ -20,5 +20,7 @@ public class Bill {
     private String content;
     private String address;
     private double money;
+    private String status;
+
 
 }

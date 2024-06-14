@@ -12,14 +12,20 @@ import java.util.Optional;
 public interface IBillRepository extends JpaRepository<Bill, Long> {
     @Transactional
     @Modifying
-    @Query(nativeQuery = true, value = "insert into bill (code,date_bill,payment,content,address,money)" +
-            "select :#{#bill.code}, current_date(),:#{#bill.payment}, :#{#bill.content},:#{#bill.address},sum(c.total_price)" +
+    @Query(nativeQuery = true, value = "insert into bill (code,date_bill,payment,content,address,money,status)" +
+            "select :#{#bill.code}, current_date(),:#{#bill.payment}, :#{#bill.content},:#{#bill.address},sum(c.total_price),'pending'" +
             "from cart c where c.account_id = :accountId")
     void saveBill(Bill bill, @Param("accountId") Long accountId);
 
-
+    @Query(nativeQuery = true, value = "SELECT LAST_INSERT_ID();")
+    Long getLastInsertedId();
 
     Bill findByCode(String code);
 
-   // Bill findByCodeBill(String code);
+    @Transactional
+    @Modifying
+    @Query(nativeQuery = true, value = "update bill set status = 'Đã thanh toán' ")
+    void updateBill(Bill bill, Long id);
+
+    // Bill findByCodeBill(String code);
 }

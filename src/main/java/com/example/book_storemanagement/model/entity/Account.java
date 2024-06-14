@@ -2,11 +2,13 @@ package com.example.book_storemanagement.model.entity;
 
 import jakarta.persistence.*;
 import lombok.Data;
+import lombok.Getter;
 import lombok.NoArgsConstructor;
 import java.util.Set;
 
 @Entity
 @Data
+@Getter
 @NoArgsConstructor
 @Table(name = "account")
 public class Account {

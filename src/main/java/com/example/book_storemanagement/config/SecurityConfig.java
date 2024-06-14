@@ -73,6 +73,7 @@ public class SecurityConfig {
                         .requestMatchers(HttpMethod.OPTIONS,"/**").permitAll()
                         .requestMatchers("/api/auth/login**", "/api/**").permitAll()
                         .requestMatchers("/api/**").hasAnyAuthority("ROLE_USER")
+                                .requestMatchers("/auth/**").hasRole("USER")
                         ///.requestMatchers(HttpMethod.POST,"/api/users/*").hasAnyAuthority("ROLE_USER")
                         //Đang chờ contoller để hoàn thành
                 )

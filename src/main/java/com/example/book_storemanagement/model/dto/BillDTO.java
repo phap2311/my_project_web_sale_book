@@ -3,6 +3,7 @@ package com.example.book_storemanagement.model.dto;
 import java.time.LocalDate;
 
 public class BillDTO {
+
     private String code;
     private LocalDate date_bill;
     private String payment;
