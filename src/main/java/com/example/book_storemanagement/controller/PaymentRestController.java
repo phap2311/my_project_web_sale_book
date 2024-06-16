@@ -8,6 +8,8 @@ import com.example.book_storemanagement.model.entity.Account;
 import com.example.book_storemanagement.model.entity.Bill;
 import com.example.book_storemanagement.service.account.IAccountService;
 import com.example.book_storemanagement.service.bill.IBillService;
+import com.example.book_storemanagement.service.book.IBookService;
+import com.example.book_storemanagement.service.cart.ICartService;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
@@ -28,6 +30,10 @@ public class PaymentRestController {
 
     @Autowired
     private IBillService iBillService;
+    @Autowired
+    private IBookService iBookService;
+    @Autowired
+    private ICartService iCartService;
 
     private final PaymentInfoStorage paymentInfoStorage;
 
@@ -121,6 +127,8 @@ public class PaymentRestController {
         if (status.equals("00")) {
             System.out.println(account.get().getId() + " da thanh toan thanh cong");
             this.iBillService.update(bill,id);
+            this.iBookService.updateQuantityBook(id);
+            this.iCartService.removeAllBookCart(id);
             return new ResponseEntity<>("success",HttpStatus.OK);
         } else {
             System.out.println(account.get().getName() + " da huy thanh toan");

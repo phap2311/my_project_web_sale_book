@@ -14,16 +14,16 @@ import java.util.Optional;
 
 public interface ICartRepository extends JpaRepository<Cart, Long> {
 
-
     @Modifying
     @Transactional
-    @Query(nativeQuery = true, value = "INSERT INTO cart (account_id, quantity, date_purchase, total_price, status, bill_id, books_id) " +
+    @Query(nativeQuery = true, value = "INSERT INTO cart (account_id, quantity, date_purchase, total_price, bill_id, books_id) " +
             "VALUES (:accountId, :#{#cart.quantity}, current_time(), " +
-            "(SELECT b.price FROM Books b WHERE b.id = :bookId), 'pending',null, :bookId)")
+            "(SELECT b.price FROM Books b WHERE b.id = :bookId),null, :bookId)")
     void createCart(@Param("accountId") Long accountId,
                     @Param("bookId") Long bookId,
                     @Param("cart") Cart cart);
-    @Query(nativeQuery = true,value = "select * from cart where account_id = :accountId")
+
+    @Query(nativeQuery = true, value = "select * from cart where account_id = :accountId")
     List<Cart> findByAccountId(@Param("accountId") Long accountId);
 
     @Query(nativeQuery = true, value = "select * from cart where account_id = :accountId and books_id = :bookId")
@@ -40,6 +40,13 @@ public interface ICartRepository extends JpaRepository<Cart, Long> {
             " group by account_id")
     Optional<TotalPriceDTO> getTotal(Long accountId);
 
+    @Modifying
+    @Transactional
+    @Query(nativeQuery = true, value = "delete from cart where account_id = :accountId")
+    void removeAllBookCart(@Param("accountId") Long accountId);
+
+    @Query(nativeQuery = true, value = "select quantity,total_price, books_id from cart  where account_id = :accountId and books_id = :bookId")
+    Optional<CartDTO> getAllCartByBook(@Param("accountId") Long accountId,@Param("bookId") Long bookId);
 
 }
 

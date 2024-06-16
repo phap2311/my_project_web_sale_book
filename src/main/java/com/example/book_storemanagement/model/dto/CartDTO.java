@@ -17,5 +17,5 @@ public interface CartDTO {
 
     double getTotal_price();
     Long getBillId();
-    Long getBookId();
+    Long getBooks_id();
 }

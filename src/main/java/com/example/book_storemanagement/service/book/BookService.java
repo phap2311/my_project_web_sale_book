@@ -37,4 +37,9 @@ public class BookService implements IBookService {
     public List<Books> findAllBookByAccountId(Long accountId) {
         return iBookRepository.findAllBookByAccountId(accountId);
     }
+
+    @Override
+    public void updateQuantityBook(Long idAccount) {
+        iBookRepository.updateQuantityBook(idAccount);
+    }
 }

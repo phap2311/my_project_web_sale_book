@@ -27,11 +27,11 @@ public class CartController {
     private IAccountRepository iAccountRepository;
 
     @PostMapping("create")
-    public ResponseEntity<Cart> createCart(@RequestParam Long accountId, @RequestParam Long bookId,@RequestBody Cart cart,@RequestHeader("Authorization") String tokenHeader) {
+    public ResponseEntity<Cart> createCart(@RequestParam Long accountId, @RequestParam Long bookId, @RequestBody Cart cart, @RequestHeader("Authorization") String tokenHeader) {
         String token = tokenHeader.substring(7);
         String account = jwtService.getUsernameFromJwtToken(token);
         cart.setAccount(iAccountRepository.findByUsername(account));
-        iCartService.createCart(accountId, bookId,cart);
+        iCartService.createCart(accountId, bookId, cart);
         return new ResponseEntity<>(HttpStatus.CREATED);
     }
 
@@ -51,9 +51,19 @@ public class CartController {
     }
 
     @DeleteMapping("{id}")
-    public ResponseEntity<Void> removeBooksToCart(@PathVariable Long id ) {
+    public ResponseEntity<Void> removeBooksToCart(@PathVariable Long id) {
         iCartService.removeBookToCart(id);
         return new ResponseEntity<>(HttpStatus.ACCEPTED);
+    }
+
+    @GetMapping("{accountId}/book/{bookId}")
+    public ResponseEntity<CartDTO> getAllCartByBooks(@PathVariable Long accountId, @PathVariable Long bookId) {
+        Optional<CartDTO> cartDTOOptional = iCartService.getAllCartByBook(accountId, bookId);
+        if (!cartDTOOptional.isPresent()) {
+            return new ResponseEntity<>(HttpStatus.NOT_FOUND);
+
+        }
+        return new ResponseEntity<>(cartDTOOptional.get(), HttpStatus.OK);
     }
 
 }
