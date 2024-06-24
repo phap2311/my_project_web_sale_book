@@ -21,6 +21,10 @@ public class Bill {
     private String address;
     private double money;
     private String status;
+    @ManyToOne
+    @JoinColumn(name = "account_id")
+    private Account account;
+
 
 
 }

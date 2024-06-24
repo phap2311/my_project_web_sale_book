@@ -90,4 +90,13 @@ public class BookController {
         return new ResponseEntity<>(HttpStatus.ACCEPTED);
     }
 
+    @GetMapping("/nameBook/")
+    public ResponseEntity<List<Books>> getAllBookByName(@RequestHeader("Authorization") String tokenHeader, @RequestParam String name) {
+        String token = tokenHeader.substring(7);
+        String account = jwtService.getUsernameFromJwtToken(token);
+        iAccountRepository.findByUsername(account);
+        List<Books> books = iBookService.findAllBookByName(name);
+        return new ResponseEntity<>(books, HttpStatus.OK);
+    }
+
 }

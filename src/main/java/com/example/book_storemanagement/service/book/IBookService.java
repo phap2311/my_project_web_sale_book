@@ -16,5 +16,8 @@ public interface IBookService {
 
     void updateQuantityBook(Long idAccount);
 
+    List<Books> findAllBookByName(@Param("name") String name);
+
+
 
 }

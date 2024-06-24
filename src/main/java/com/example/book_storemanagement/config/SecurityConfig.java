@@ -70,12 +70,20 @@ public class SecurityConfig {
         return http.csrf(AbstractHttpConfigurer::disable)
                 .addFilterBefore(jwtAuthenticationFilter(), UsernamePasswordAuthenticationFilter.class)
                 .authorizeHttpRequests(auth -> auth
-                        .requestMatchers(HttpMethod.OPTIONS,"/**").permitAll()
+                        .requestMatchers(HttpMethod.OPTIONS, "/**").permitAll()
                         .requestMatchers("/api/auth/login**", "/api/**").permitAll()
                         .requestMatchers("/api/**").hasAnyAuthority("ROLE_USER")
-                                .requestMatchers("/auth/**").hasRole("USER")
-                        ///.requestMatchers(HttpMethod.POST,"/api/users/*").hasAnyAuthority("ROLE_USER")
-                        //Đang chờ contoller để hoàn thành
+                        .requestMatchers("/auth/**").hasRole("USER")
+                        .requestMatchers("/api/books/createBook/**").hasAuthority("ROLE_SELLER")
+                        .requestMatchers("/api/books/update/**").hasAuthority("ROLE_SELLER")
+                        .requestMatchers("/api/books/delete/**").hasAuthority("ROLE_SELLER")
+                        .requestMatchers("/api/books/nameBook/**").hasAuthority("ROLE_USER")
+                        .requestMatchers("/api/bill/create/**").hasAuthority("ROLE_USER")
+                        .requestMatchers("/api/bill/**").permitAll()
+                        .requestMatchers("/api/cart/create/**").hasAuthority("ROLE_USER")
+                        .requestMatchers("/api/seller/create/**").hasAuthority("ROLE_ADMIN")
+
+
                 )
                 .exceptionHandling(customizer -> customizer.accessDeniedHandler(customAccessDeniedHandler()))
                 .sessionManagement(sess -> sess.sessionCreationPolicy(SessionCreationPolicy.STATELESS))

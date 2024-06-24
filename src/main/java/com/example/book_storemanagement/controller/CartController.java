@@ -2,6 +2,7 @@ package com.example.book_storemanagement.controller;
 
 import com.example.book_storemanagement.config.service.JwtService;
 import com.example.book_storemanagement.model.dto.CartDTO;
+import com.example.book_storemanagement.model.dto.CartDTOI1;
 import com.example.book_storemanagement.model.dto.TotalPriceDTO;
 import com.example.book_storemanagement.model.entity.Cart;
 import com.example.book_storemanagement.repository.IAccountRepository;
@@ -36,11 +37,16 @@ public class CartController {
     }
 
     @GetMapping("{accountId}")
-    public ResponseEntity<List<CartDTO>> findAllCart(@PathVariable Long accountId) {
-        List<CartDTO> carts = iCartService.findAllCart(accountId);
+    public ResponseEntity<List<CartDTOI1>> findAllCart(@PathVariable Long accountId) {
+        List<CartDTOI1> carts = iCartService.findAllCart(accountId);
         return new ResponseEntity<>(carts, HttpStatus.OK);
     }
 
+//    @GetMapping("{accountId}")
+//    public ResponseEntity<List<CartDTO>> findAllCart(@PathVariable Long accountId) {
+//        List<CartDTO> carts = iCartService.findAllCart(accountId);
+//        return new ResponseEntity<>(carts, HttpStatus.OK);
+//    }
     @GetMapping("total/{accountId}")
     public ResponseEntity<TotalPriceDTO> findTotalMoney(@PathVariable Long accountId) {
         Optional<TotalPriceDTO> totalPriceDTO = iCartService.getTotal(accountId);
@@ -56,9 +62,21 @@ public class CartController {
         return new ResponseEntity<>(HttpStatus.ACCEPTED);
     }
 
+//    @DeleteMapping("/{accountId}/book/{bookId}")
+//    public ResponseEntity<List<CartDTOI1>> removeBookFromCart(@PathVariable Long accountId, @PathVariable Long bookId) {
+//        List<CartDTOI1> updatedCart = iCartService.removeBookFromCart(accountId, bookId);
+//        return ResponseEntity.ok(updatedCart);
+//    }
+
+//    @DeleteMapping("/{accountId}")
+//    public ResponseEntity<List<CartDTO>> removeAllBooksFromCart(@PathVariable Long accountId) {
+//        List<CartDTO> updatedCart = iCartService.removeAllBooksFromCart(accountId);
+//        return ResponseEntity.ok(updatedCart);
+//    }
+
     @GetMapping("{accountId}/book/{bookId}")
-    public ResponseEntity<CartDTO> getAllCartByBooks(@PathVariable Long accountId, @PathVariable Long bookId) {
-        Optional<CartDTO> cartDTOOptional = iCartService.getAllCartByBook(accountId, bookId);
+    public ResponseEntity<CartDTOI1> getAllCartByBooks(@PathVariable Long accountId, @PathVariable Long bookId) {
+        Optional<CartDTOI1> cartDTOOptional = iCartService.getAllCartByBook(accountId, bookId);
         if (!cartDTOOptional.isPresent()) {
             return new ResponseEntity<>(HttpStatus.NOT_FOUND);
 
@@ -66,4 +84,10 @@ public class CartController {
         return new ResponseEntity<>(cartDTOOptional.get(), HttpStatus.OK);
     }
 
+
+    @GetMapping("{billId}/account/{accountId}")
+    public ResponseEntity<List<CartDTOI1>> getAllCartByBill(@PathVariable Long accountId, @PathVariable Long billId) {
+        List<CartDTOI1> cart = iCartService.getAllCartByBill(accountId, billId);
+        return new ResponseEntity<>(cart, HttpStatus.OK);
+    }
 }

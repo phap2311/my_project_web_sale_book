@@ -1,6 +1,7 @@
 package com.example.book_storemanagement.repository;
 
 import com.example.book_storemanagement.model.dto.CartDTO;
+import com.example.book_storemanagement.model.dto.CartDTOI1;
 import com.example.book_storemanagement.model.dto.TotalPriceDTO;
 import com.example.book_storemanagement.model.entity.Cart;
 import jakarta.transaction.Transactional;
@@ -32,7 +33,12 @@ public interface ICartRepository extends JpaRepository<Cart, Long> {
     @Query(nativeQuery = true, value = "select b.name,b.image, b.author,c.id, c.quantity, c.date_purchase, c.total_price, c.books_id as bookId, c.bill_id as billId, c.account_id as accountId \n" +
             " from cart c join books b on c.books_id = b.id\n" +
             " where c.account_id = :accountId")
-    List<CartDTO> findAllCart(@Param("accountId") Long accountId);
+    List<CartDTOI1> findAllCart(@Param("accountId") Long accountId);
+
+//    @Query(nativeQuery = true, value = "select b.name,b.image, b.author,c.id, c.quantity, c.date_purchase, c.total_price, c.books_id as bookId, c.bill_id as billId, c.account_id as accountId \n" +
+//            " from cart c join books b on c.books_id = b.id\n" +
+//            " where c.account_id = :accountId")
+//    List<CartDTO> findAllCart(@Param("accountId") Long accountId);
 
     @Query(nativeQuery = true, value = " select sum(quantity) as totalQuantity ,sum(total_price) as totalMoney\n" +
             " from cart \n" +
@@ -45,8 +51,11 @@ public interface ICartRepository extends JpaRepository<Cart, Long> {
     @Query(nativeQuery = true, value = "delete from cart where account_id = :accountId")
     void removeAllBookCart(@Param("accountId") Long accountId);
 
+    @Query(nativeQuery = true, value = "select b.name,b.image,c.quantity,c.total_price, c.date_purchase  from cart c join books b on c.books_id = b.id where c.account_id = :accountId and c.bill_id = :billId")
+    List<CartDTOI1> getAllCartByBill(@Param("accountId") Long accountId, @Param("billId") Long billId);
+
     @Query(nativeQuery = true, value = "select quantity,total_price, books_id from cart  where account_id = :accountId and books_id = :bookId")
-    Optional<CartDTO> getAllCartByBook(@Param("accountId") Long accountId,@Param("bookId") Long bookId);
+    Optional<CartDTOI1> getAllCartByBook(@Param("accountId") Long accountId, @Param("bookId") Long bookId);
 
 }
 

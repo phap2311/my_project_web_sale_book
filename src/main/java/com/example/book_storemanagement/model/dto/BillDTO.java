@@ -3,13 +3,14 @@ package com.example.book_storemanagement.model.dto;
 import java.time.LocalDate;
 
 public class BillDTO {
-
     private String code;
     private LocalDate date_bill;
     private String payment;
     private String content;
     private String address;
     private double money;
+
+
 
     public BillDTO(String code, LocalDate date_bill, String payment, String content, String address, double money) {
         this.code = code;

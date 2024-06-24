@@ -1,6 +1,7 @@
 package com.example.book_storemanagement.service.cart;
 
 import com.example.book_storemanagement.model.dto.CartDTO;
+import com.example.book_storemanagement.model.dto.CartDTOI1;
 
 import com.example.book_storemanagement.model.dto.TotalPriceDTO;
 import com.example.book_storemanagement.model.entity.Bill;
@@ -10,11 +11,11 @@ import com.example.book_storemanagement.repository.IBillRepository;
 import com.example.book_storemanagement.repository.IBookRepository;
 import com.example.book_storemanagement.repository.ICartRepository;
 import org.springframework.beans.factory.annotation.Autowired;
-import org.springframework.http.converter.json.GsonBuilderUtils;
 import org.springframework.stereotype.Service;
 
 import java.util.List;
 import java.util.Optional;
+import java.util.stream.Collectors;
 
 @Service
 public class CartService implements ICartService {
@@ -90,19 +91,43 @@ public class CartService implements ICartService {
         iCartRepository.removeAllBookCart(accountId);
     }
 
+    @Override
+    public List<CartDTOI1> getAllCartByBill(Long accountId, Long billId) {
+        return iCartRepository.getAllCartByBill(accountId,billId);
+    }
+
+
+//    public List<CartDTOI1> removeBookFromCart(Long accountId, Long bookId) {
+//        List<CartDTOI1> cart = findAllCart(accountId);
+//        return cart.stream()
+//                .filter(cartItem -> !cartItem.getBooks_id().equals(bookId))
+//                .collect(Collectors.toList());
+//    }
 //    public String generateFiveDigitInteger() {
 //        int randomNumber = (int) (Math.random() * 90000) + 10000;
 //        return String.valueOf(randomNumber);
 //    }
 
-
+//    public List<CartDTO> removeAllBooksFromCart(Long accountId) {
+//        // Fetch the cart items for the account
+//        List<CartDTO> cart = findAllCart(accountId);
+//
+//        // Clear the cart by returning an empty list
+//        cart.clear();
+//
+//        // Return the updated (empty) cart
+//        return cart;
+//    }
     @Override
-    public List<CartDTO> findAllCart(Long accountId) {
+    public List<CartDTOI1> findAllCart(Long accountId) {
         return iCartRepository.findAllCart(accountId);
     }
-
+//    @Override
+//    public List<CartDTO> findAllCart(Long accountId) {
+//        return iCartRepository.findAllCart(accountId);
+//    }
     @Override
-    public Optional<CartDTO> getAllCartByBook(Long accountId, Long bookId) {
+    public Optional<CartDTOI1> getAllCartByBook(Long accountId, Long bookId) {
         return iCartRepository.getAllCartByBook(accountId, bookId);
     }
 

@@ -123,12 +123,14 @@ public class PaymentRestController {
                                             @RequestParam(value = "vnp_ResponseCode", required = false) String responseCode,
                                             Principal principal) {
         Bill bill = paymentInfoStorage.getBill();
+        Long billId = iBillService.getLastInsertedId();
         Optional<Account> account = this.iAccountService.findById(id);
         if (status.equals("00")) {
             System.out.println(account.get().getId() + " da thanh toan thanh cong");
-            this.iBillService.update(bill,id);
+            this.iBillService.update(id, billId);
             this.iBookService.updateQuantityBook(id);
-            this.iCartService.removeAllBookCart(id);
+            this.iCartService.getAllCartByBill(id,billId);
+           // this.iCartService.removeAllBookCart(id);
             return new ResponseEntity<>("success",HttpStatus.OK);
         } else {
             System.out.println(account.get().getName() + " da huy thanh toan");

@@ -1,6 +1,7 @@
 package com.example.book_storemanagement.service.cart;
 
 import com.example.book_storemanagement.model.dto.CartDTO;
+import com.example.book_storemanagement.model.dto.CartDTOI1;
 import com.example.book_storemanagement.model.dto.TotalPriceDTO;
 import com.example.book_storemanagement.model.entity.Cart;
 import org.springframework.data.repository.query.Param;
@@ -13,8 +14,9 @@ public interface ICartService {
     void createCart(Long accountId, Long bookId, Cart cart);
 
 
-    List<CartDTO> findAllCart(Long accountId);
-    Optional<CartDTO>getAllCartByBook(Long accountId, Long bookId);
+    List<CartDTOI1> findAllCart(Long accountId);
+    //List<CartDTO> findAllCart(Long accountId);
+    Optional<CartDTOI1>getAllCartByBook(Long accountId, Long bookId);
 
     Optional<TotalPriceDTO> getTotal(Long accountId);
 
@@ -24,5 +26,8 @@ public interface ICartService {
     void updateCartWithBill(Long accountId, String billCode);
 
     void removeAllBookCart(Long accountId);
+
+    List<CartDTOI1> getAllCartByBill(Long accountId, Long billId);
+
 
 }
